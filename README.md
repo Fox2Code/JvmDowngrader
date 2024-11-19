@@ -180,13 +180,13 @@ I do not automatically make the configuration shadowed into your output.
 
 #### Including newer dependencies on lower java version building
 
-This is not recommended due to the following but is still possible.
-It is recommended to just shade dependencies into your project and downgrade the combined output.
+This is **strongly** not recommended due to the following but is still possible.
+It is **strongly** recommended to just shade dependencies into your project and downgrade the combined output.
 The dependencies may not be correctly represented in the pom with this method.
 
 There may be issues with gradle metadata breaking because of how early gradle checks the java version,
-you can disable this by setting `mavenPom` and `artifact` in the `metadataSources` function on repositories
-to explicitly disable gradle metadata.
+you can disable this by setting `artifact` in the `metadataSources` function on repositories
+to explicitly disable maven and gradle metadata.
 
 for example:
 
@@ -194,12 +194,13 @@ for example:
 repositories {
     mavenCentral {
         metadataSources {
-            mavenPom()
             artifact()
         }
     }
 }
 ```
+
+Note: Disabling both gradle and maven metadata will make sub-dependencies not be automatically added by gradle, please avoid this method at all cost.
 
 ## "Compile" Time Downgrading
 
